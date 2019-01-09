@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser ')
+const bodyParser = require('body-parser')
 const routes = require('./routes/routes')
 const cors = require('cors')
 const app = express()
@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost:27017/locali', { useNewUrlParser: true})
 
 app.use(cors())
 app.use(bodyParser.json())
+routes(app)
 app.use((err, req, res, next) => { 
   res.status(422).send({ error: err._message })
 })

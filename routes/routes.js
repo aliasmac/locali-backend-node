@@ -5,22 +5,25 @@ const MessagesController = require('../controllers/messages_controller')
 
 module.exports = app => {
 
+  app.get('/api/v1', UsersController.greeting)
+
   // USER ROUTES
-  app.post('/api/v1/users', UsersController.create)
-  app.post('/api/v1/login', UsersController.login)
-  app.get('/api/v1/validate', UsersController.validate)
-  app.get('/api/v1/users/:id', UsersController.getUserObj)
+  // app.post('/api/v1/users', UsersController.create)
+  // app.post('/api/v1/login', UsersController.login)
+  // app.get('/api/v1/validate', UsersController.validate)
+  // app.get('/api/v1/users/:id', UsersController.getUserObj)
 
   // BROADCATS ROUTES 
-  app.post('/api/v1/brodcasts', BroadcastsController.create)
-  app.post('/api/v1/broadcasts', BroadcastsController.save)
-  app.delete('./api/v1/broadcast/:id', BroadcastsController.delete)
-  app.get('/api/v1/broadcastbypin', BroadcastsController.getBroadcast)
+  // app.post('/api/v1/brodcasts', BroadcastsController.create)
+  // app.post('/api/v1/broadcasts', BroadcastsController.save)
+  // app.delete('./api/v1/broadcast/:id', BroadcastsController.delete)
+  // app.get('/api/v1/broadcastbypin', BroadcastsController.getBroadcast)
 
   // MESSAGES ROUTES 
-  app.post('/api/v1/messages', MessagesController.create)
-  app.patch('/api/v1/messages/:id', MessagesController.edit)
-  app.delete('/api/v1/messages/:id', MessagesController.delete)
+  // app.post('/api/v1/messages', MessagesController.create)
+  // app.patch('/api/v1/messages/:id', MessagesController.edit)
+  // app.delete('/api/v1/messages/:id', MessagesController.delete)
+
 }
 
 
