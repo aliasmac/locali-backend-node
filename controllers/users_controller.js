@@ -6,6 +6,29 @@ module.exports = {
     res.send({ welcome: "Welcome to Locali!"})
   },
 
+  // {"username"=>"ali", "password"=>"ali",
+  // "controller"=>"api/v1/users", "action"=>"create",
+  // "user"=>{"username"=>"ali"}}
+
+  all(req, res, next) {
+    User.find({})
+      .then(users => res.send(users))
+      .catch(next)
+  },
+
+  create(req, res, next) {
+    console.log("USER CONTROLLER - CREATE:", req.body)
+    let user = new User(req.body)
+    user.save()
+      .then(() => user.generateAuthToken())
+      .then(token => res.header('x-auth', token).send(user))
+      .catch(next)
+    
+    // Model.create noth creates and saves the instance to the database
+
+  },
+
+
 
 
 

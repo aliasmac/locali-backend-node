@@ -8,7 +8,8 @@ module.exports = app => {
   app.get('/api/v1', UsersController.greeting)
 
   // USER ROUTES
-  // app.post('/api/v1/users', UsersController.create)
+  app.get('/api/v1/users', UsersController.all)
+  app.post('/api/v1/users', UsersController.create)
   // app.post('/api/v1/login', UsersController.login)
   // app.get('/api/v1/validate', UsersController.validate)
   // app.get('/api/v1/users/:id', UsersController.getUserObj)
