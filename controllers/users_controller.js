@@ -3,12 +3,8 @@ const User = require('../models/user')
 module.exports = {
 
   greeting(req, res) {
-    res.send({ welcome: "Welcome to Locali!"})
+   res.send(req.user)
   },
-
-  // {"username"=>"ali", "password"=>"ali",
-  // "controller"=>"api/v1/users", "action"=>"create",
-  // "user"=>{"username"=>"ali"}}
 
   all(req, res, next) {
     User.find({})
@@ -23,9 +19,6 @@ module.exports = {
       .then(() => user.generateAuthToken())
       .then(token => res.header('x-auth', token).send(user))
       .catch(next)
-    
-    // Model.create noth creates and saves the instance to the database
-
   },
 
 

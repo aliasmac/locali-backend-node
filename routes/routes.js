@@ -1,11 +1,11 @@
 const UsersController = require('../controllers/users_controller')
 const BroadcastsController = require('../controllers/broadcasts_controller')
 const MessagesController = require('../controllers/messages_controller')
-
+const { authenticate } = require('../middleware/authenticate')
 
 module.exports = app => {
 
-  app.get('/api/v1', UsersController.greeting)
+  app.get('/api/v1', authenticate, UsersController.greeting)
 
   // USER ROUTES
   app.get('/api/v1/users', UsersController.all)
