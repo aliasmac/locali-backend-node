@@ -90,6 +90,12 @@ class UserClass {
     return user.save().then(() => token)
   }
 
+  removeToken(token) {
+    return this.update({
+      $pull: { tokens: token }
+    })
+  }
+
   // superseeds the standard browser JSON response to only return specified
   toJSON() {
     return _.pick(this.toObject(), [

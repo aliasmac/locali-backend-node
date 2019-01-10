@@ -27,6 +27,12 @@ module.exports = {
         return user.generateAuthToken()
           .then(token => res.header('x-auth', token).send(user))
       }).catch(err => response.status(400).send())
+  },
+
+  logout = (req, res) => {
+    req.user.removeToken(req.token)
+      .then(() => response.status(200).send())
+      .catch(()=> response.status(400).send())
   }
 
 }
