@@ -29,6 +29,7 @@ const UserSchema = new Schema({
   }]
 })
 
+
 UserSchema.pre('save', function (next) {
   let user = this
   if (user.isModified('password')) {
@@ -51,7 +52,9 @@ class UserClass {
 
     try {
       decoded = jwt.verify(token, 'secret')
-      console.log("DECODED:", decoded)
+      // { _id: '5c375fc39597461df6623ace',
+      //   access: 'auth',
+      //   iat: 1547136217 }
     } catch(e) {
 
       return Promise.reject()
@@ -64,6 +67,19 @@ class UserClass {
     })
   }
 
+  static findAndAuthenticate(username, password) {
+    return User.findOne({username})
+      .then(user => {
+        if (!user) { return Promise.reject() }
+        return user.authenticateUser(password).then(resp => {
+          if (resp) { return user }
+        })
+      })
+  }
+
+  authenticateUser(password) {
+    return bcrypt.compare(password, this.password)
+  }
 
   generateAuthToken() {
     let user = this
@@ -74,6 +90,7 @@ class UserClass {
     return user.save().then(() => token)
   }
 
+  // superseeds the standard browser JSON response to only return specified
   toJSON() {
     return _.pick(this.toObject(), [
       '_id',
@@ -89,3 +106,19 @@ module.exports = { User }
 
 
 
+// static findAndAuthenticate(username, password) {
+//   return User.findOne({username})
+//     .then(user => {
+//       if (!user) { return Promise.reject() }
+
+//       return new Promise((resolve, reject) => {
+//         bcrypt.compare(password, user.password, (err, res) => {
+//           if (res) {
+//             resolve(user)
+//           } else {
+//             reject()
+//           }
+//         })
+//       })
+//     })
+// }

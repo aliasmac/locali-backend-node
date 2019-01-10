@@ -21,8 +21,25 @@ module.exports = {
       .catch(next)
   },
 
-
-
-
+  login(req, res, next) {
+    User.findAndAuthenticate(req.body.username, req.body.password)
+      .then( user => {
+        return user.generateAuthToken()
+          .then(token => res.header('x-auth', token).send(user))
+      }).catch(err => response.status(400).send())
+  }
 
 }
+
+// exports.login = (request, response) => {
+//   User.findAndAuthenticate(request.body.username, request.body.password)
+//     .then(user => { 
+//         user.generateToken()
+//         .then(token => {
+//           response.header('Access-Control-Expose-Headers', 'authorization')
+//           response.header('authorization', token)
+//           return user.populate()
+//         })
+//         .then(user => response.send({ user }))
+//       }).catch(err => response.status(400).send())
+// }
